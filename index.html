@@ -1,17 +1,28 @@
-<html ng-app="agendaContados">
+<html ng-app="listaTelefonica">
 <head>
 	<title>Agenda Contatos com AngularJs</title>
-	<script src="angular.js"></script>
+	<link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap.css">
+	<style>
+		.jumbotron
+			{
+				width: 400px;
+				text-align: center;
+				margin-top: 20px;
+				margin-left: auto;
+				margin-right: auto;	
+			}
+	</style>
+	<script src="lib/angular/angular.js"></script>
 	<script>
-		angular.module("helloWorld",[]);
-		angular.module("helloWorld").controller("helloWorldCtrl",function($scope){
-			$scope.message = "hello World!";
+		angular.module("listaTelefonica",[]);
+		angular.module("listaTelefonica").controller("listaTelefonicaCtrl",function($scope){
+			$scope.app = "Lista Telefonica";
 		}); 
 	</script>
 </head>
-<body>
-	<div ng-controller="helloWorldCtrl">
-		{{message}}
+<body ng-controller="listaTelefonicaCtrl">
+	<div class="jumbotron">
+		<h4 ng-bind="app"></h4>
 	</div>
 </body>
 </html>
