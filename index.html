@@ -5,12 +5,20 @@
 	<style>
 		.jumbotron
 			{
-				width: 450px;
+				width: 400px;
 				text-align: center;
 				margin-top: 20px;
 				margin-left: auto;
 				margin-right: auto;	
 			}
+		.table
+		{
+			margin-top: 20px;
+		}
+		.form-control
+		{
+			margin-bottom: 5px;
+		}
 	</style>
 	<script src="lib/angular/angular.js"></script>
 	<script>
@@ -38,6 +46,25 @@
 				<td>{{contato.telefone}}</td>
 			</tr>	
 		</table>
+		<hr/>
+		<input class="form-control" type="text" placeholder="Nome" ng-model="nome"/>
+		<input class="form-control" type="text" placeholder="Telefone" ng-model="telefone"/>
+
 	</div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
