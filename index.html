@@ -5,7 +5,7 @@
 	<style>
 		.jumbotron
 			{
-				width: 400px;
+				width: 450px;
 				text-align: center;
 				margin-top: 20px;
 				margin-left: auto;
@@ -17,12 +17,27 @@
 		angular.module("listaTelefonica",[]);
 		angular.module("listaTelefonica").controller("listaTelefonicaCtrl",function($scope){
 			$scope.app = "Lista Telefonica";
+			$scope.contatos = [
+				{nome: "Pedro", telefone: "99991111"},
+				{nome: "Liz", telefone: "99992222"},
+				{nome: "Elo", telefone: "99993333"}
+			];
 		}); 
 	</script>
 </head>
 <body ng-controller="listaTelefonicaCtrl">
 	<div class="jumbotron">
-		<h4 ng-bind="app"></h4>
+		<h3>{{app}}</h3>
+		<table class="table">
+			<tr>
+				<th>Nome</th>
+				<th>Telefone</th>
+			</tr>
+			<tr ng-repeat="contato in contatos">
+				<td>{{contato.nome}}</td>
+				<td>{{contato.telefone}}</td>
+			</tr>	
+		</table>
 	</div>
 </body>
 </html>
