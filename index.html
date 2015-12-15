@@ -19,6 +19,10 @@
 		{
 			margin-bottom: 5px;
 		}
+		.btn
+		{
+			margin-top: 20px;
+		}
 	</style>
 	<script src="lib/angular/angular.js"></script>
 	<script>
@@ -30,6 +34,10 @@
 				{nome: "Liz", telefone: "99992222"},
 				{nome: "Elo", telefone: "99993333"}
 			];
+			$scope.adicionarCotato = function(contato){
+				$scope.contatos.push(angular.copy(contato));
+				delete $scope.contato;
+			};
 		}); 
 	</script>
 </head>
@@ -47,9 +55,10 @@
 			</tr>	
 		</table>
 		<hr/>
-		<input class="form-control" type="text" placeholder="Nome" ng-model="nome"/>
-		<input class="form-control" type="text" placeholder="Telefone" ng-model="telefone"/>
-
+		<input class="form-control" type="text" placeholder="Nome" ng-model="contato.nome"/>
+		<input class="form-control" type="text" placeholder="Telefone" ng-model="contato.telefone"/>
+		<button class="btn btn-primary btn-block"ng-click="adicionarCotato(contato)">Adicionar Contato</button>
+		{{contato}}
 	</div>
 </body>
 </html>
