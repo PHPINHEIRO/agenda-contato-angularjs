@@ -53,6 +53,7 @@
 			$scope.adicionarContato = function(contato){
 				$scope.contatos.push(angular.copy(contato));
 				delete $scope.contato;
+				$scope.formContato.$setPristine();
 			};
 			$scope.deletarContato = function(contatos){
 				$scope.contatos = contatos.filter(function(contato){
@@ -85,13 +86,33 @@
 			</tr>	
 		</table>
 		<hr/>
-		<input class="form-control" type="text" placeholder="Nome" ng-model="contato.nome"/>
-		<input class="form-control" type="text" placeholder="Telefone" ng-model="contato.telefone"/>
-		<select class="form-control" ng-model="contato.operadora" ng-options="operadora.nome group by operadora.categoria for operadora in operadoras">
-			<option value="">Selecione uma Operadora</option>
-		</select>
-		<button class="btn btn-primary btn-block" ng-click="adicionarContato(contato)" ng-disabled="!contato.nome || !contato.telefone">Adicionar Contato</button>
+		<form name="formContato">
+			<input class="form-control" type="text" placeholder="Nome" name="nome" ng-model="contato.nome" ng-required="true" ng-minlength="3"/>
+			<input class="form-control" type="text" placeholder="Telefone" name="telefone" ng-model="contato.telefone" ng-required="true" ng-minlength="8"/>
+			<select class="form-control" ng-model="contato.operadora" ng-options="operadora.nome group by operadora.categoria for operadora in operadoras">
+				<option value="">Selecione uma Operadora</option>
+			</select>
+		</form>
+
+		<div class="alert alert-danger" ng-show="formContato.nome.$error.minlength">
+			<h6>O Nome deve ter no minimo 3 caracteres.</h6>
+		</div>
+
+		<div class="alert alert-danger" ng-show="formContato.telefone.$error.minlength">
+			<h6>O Telefone deve ter no minimo 8 caracteres.</h6>
+		</div>
+
+		<div class="alert alert-danger" ng-show="formContato.nome.$error.required && formContato.nome.$dirty">
+			<h6>Por favor, informe o Nome.</h6>
+		</div>
+
+		<div class="alert alert-danger" ng-show="formContato.telefone.$error.required && formContato.telefone.$dirty">
+			<h6>Por favor, informe o telefone.</h6>
+		</div>
+
+		<button class="btn btn-primary btn-block" ng-click="adicionarContato(contato)" ng-disabled="formContato.$invalid">Adicionar Contato</button>
 		<button class="btn btn-danger btn-block" ng-click="deletarContato(contatos)" ng-disabled="!isContatoSelecioando(contatos)">Deletar Contato</button>
+
 	</div>
 </body>
 </html>
