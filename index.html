@@ -27,6 +27,10 @@
 		{
 			background-color: #F5F5F5;
 		}
+		.selecionado
+		{
+			background-color: #BFEFFF;
+		}
 	</style>
 	<script src="lib/angular/angular.js"></script>
 	<script>
@@ -46,9 +50,19 @@
 				{nome: "GVT", codigo: "25", categoria: "Fixo"},
 				{nome: "Embratel", codigo: "21", categoria: "Fixo"},
 			]
-			$scope.adicionarCotato = function(contato){
+			$scope.adicionarContato = function(contato){
 				$scope.contatos.push(angular.copy(contato));
 				delete $scope.contato;
+			};
+			$scope.deletarContato = function(contatos){
+				$scope.contatos = contatos.filter(function(contato){
+					if (!contato.selecionado) return contato;
+				});
+			};
+			$scope.isContatoSelecioando = function(contatos){
+				return contatos.some(function(contato){
+					return contato.selecionado;
+				});
 			};
 		}); 
 	</script>
@@ -58,11 +72,13 @@
 		<h3>{{app}}</h3>
 		<table class="table">
 			<tr>
+				<th></th>
 				<th>Nome</th>
 				<th>Telefone</th>
 				<th>Operadora</th>
 			</tr>
-			<tr ng-repeat="contato in contatos">
+			<tr ng-class="{selecionado: contato.selecionado}" ng-repeat="contato in contatos">
+				<td><input type="checkbox" ng-model="contato.selecionado"></td>
 				<td>{{contato.nome}}</td>
 				<td>{{contato.telefone}}</td>
 				<td>{{contato.operadora.nome}}</td>
@@ -74,7 +90,8 @@
 		<select class="form-control" ng-model="contato.operadora" ng-options="operadora.nome group by operadora.categoria for operadora in operadoras">
 			<option value="">Selecione uma Operadora</option>
 		</select>
-		<button class="btn btn-primary btn-block" ng-click="adicionarCotato(contato)" ng-disabled="!contato.nome || !contato.telefone">Adicionar Contato</button>
+		<button class="btn btn-primary btn-block" ng-click="adicionarContato(contato)" ng-disabled="!contato.nome || !contato.telefone">Adicionar Contato</button>
+		<button class="btn btn-danger btn-block" ng-click="deletarContato(contatos)" ng-disabled="!isContatoSelecioando(contatos)">Deletar Contato</button>
 	</div>
 </body>
 </html>
