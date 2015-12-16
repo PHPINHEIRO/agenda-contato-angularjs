@@ -2,87 +2,30 @@
 <head>
 	<title>Agenda Contatos com AngularJs</title>
 	<link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap.css">
-	<style>
-		.jumbotron
-			{
-				width: 400px;
-				text-align: center;
-				margin-top: 20px;
-				margin-left: auto;
-				margin-right: auto;	
-			}
-		.table
-		{
-			margin-top: 20px;
-		}
-		.form-control
-		{
-			margin-bottom: 5px;
-		}
-		.btn
-		{
-			margin-top: 20px;
-		}
-		.bg
-		{
-			background-color: #F5F5F5;
-		}
-		.selecionado
-		{
-			background-color: #BFEFFF;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<script src="lib/angular/angular.js"></script>
-	<script>
-		angular.module("listaTelefonica",[]);
-		angular.module("listaTelefonica").controller("listaTelefonicaCtrl",function($scope){
-			$scope.app = "Lista Telefonica";
-			$scope.contatos = [
-				{nome: "Pedro", telefone: "99991111"},
-				{nome: "Liz", telefone: "99992222"},
-				{nome: "Elo", telefone: "99993333"}
-			];
-			$scope.operadoras = [
-				{nome: "Oi", codigo: "31", categoria: "Celular"},
-				{nome: "Vivo", codigo: "15", categoria: "Celular"},
-				{nome: "Tim", codigo: "41", categoria: "Celular"},
-				{nome: "Claro", codigo: "21", categoria: "Celular"},
-				{nome: "GVT", codigo: "25", categoria: "Fixo"},
-				{nome: "Embratel", codigo: "21", categoria: "Fixo"},
-			]
-			$scope.adicionarContato = function(contato){
-				$scope.contatos.push(angular.copy(contato));
-				delete $scope.contato;
-				$scope.formContato.$setPristine();
-			};
-			$scope.deletarContato = function(contatos){
-				$scope.contatos = contatos.filter(function(contato){
-					if (!contato.selecionado) return contato;
-				});
-			};
-			$scope.isContatoSelecioando = function(contatos){
-				return contatos.some(function(contato){
-					return contato.selecionado;
-				});
-			};
-		}); 
-	</script>
+	<script src="js/app.js"></script>
+	<script src="js/controllers/listaTelefonicaCtrl.js"></script>
+
 </head>
 <body class="bg"ng-controller="listaTelefonicaCtrl">
 	<div class="jumbotron">
 		<h3>{{app}}</h3>
+		<input class="form-control" type="text" placeholder="Pesquisar" ng-model="criteriosDeBusca"/>
 		<table class="table">
 			<tr>
 				<th></th>
-				<th>Nome</th>
-				<th>Telefone</th>
-				<th>Operadora</th>
+				<th><a href="" ng-click="ordenarPor('nome')">Nome</a></th>
+				<th><a href="" ng-click="ordenarPor('telefone')">Telefone</a></th>
+				<th><a href="" ng-click="ordenarPor('operadora')">Operadora</a></th>
+				<th><a href="" ng-click="ordenarPor('data')">Data</a></th>
 			</tr>
-			<tr ng-class="{selecionado: contato.selecionado}" ng-repeat="contato in contatos">
+			<tr ng-class="{selecionado: contato.selecionado}" ng-repeat="contato in contatos | filter:criteriosDeBusca | orderBy:criterioOrdenacao:direcaoOrdenacao ">
 				<td><input type="checkbox" ng-model="contato.selecionado"></td>
 				<td>{{contato.nome}}</td>
 				<td>{{contato.telefone}}</td>
 				<td>{{contato.operadora.nome}}</td>
+				<td>{{contato.data | date:'dd/MM/yyyy'}}</td>
 			</tr>	
 		</table>
 		<hr/>
@@ -130,4 +73,4 @@
 
 
 
-
+<!-- protocolo da duvida postada no site 1288123980775-->
